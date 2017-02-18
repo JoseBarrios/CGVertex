@@ -85,7 +85,7 @@ describe('let vertex = new Vertex()', function() {
       let vertex = new Vertex(KEY[0], DATA[0]);
       let child = new Vertex(KEY[1], DATA[1]);
       vertex.addNeighbour(child);
-      assert.equal(vertex.getNeighbour(child), child);
+      assert.equal(vertex.getNeighbour(KEY[1]), DATA[1]);
     });
   });
 
@@ -94,16 +94,7 @@ describe('let vertex = new Vertex()', function() {
       let vertex = new Vertex(KEY[0], DATA[0]);
       let child = new Vertex(KEY[1], DATA[1]);
       vertex.addNeighbour(child);
-      assert.equal(vertex.hasNeighbour(child), true);
-    });
-  });
-
-  describe('vertex.getNeighbourByKey(key)', function() {
-    it('should return vertex matching key', function() {
-      let vertex = new Vertex(KEY[0], DATA[0]);
-      let child = new Vertex(KEY[1], DATA[1]);
-      vertex.addNeighbour(child);
-      assert.deepEqual(vertex.getNeighbourByKey(KEY[1]), child);
+      assert.equal(vertex.hasNeighbour(KEY[1]), true);
     });
   });
 
@@ -112,7 +103,7 @@ describe('let vertex = new Vertex()', function() {
       let vertex = new Vertex(KEY[0], DATA[0]);
       let child = new Vertex(KEY[1], DATA[1]);
       vertex.addNeighbour(child);
-      assert.deepEqual(vertex.getNeighbour(child), child);
+      assert.deepEqual(vertex.getNeighbour(KEY[1]), DATA[1]);
     });
   });
 
