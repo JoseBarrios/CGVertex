@@ -4,7 +4,7 @@
 let _private = new WeakMap();
 
 /*
- * A class for a Vertex data structure containing a key, data and neighbours
+ * A class for a Vertex value structure containing a key, value and neighbours
  *
  * @author Jose Barrios
  * @version 0.1.0
@@ -28,11 +28,11 @@ class Vertex {
    * @constructor
    * @this {Vertex}
    * @param {string|number} key - The key of the Vertex, used as a reference
-   * @param {object} data - The data of the Vertex, can be any object
+   * @param {object} value - The value of the Vertex, can be any object
    */
-  constructor(key, data){
+  constructor(key, value){
     this.key = key || null;
-    this.data = data || null;
+    this.value = value || null;
     let properties = {};
     properties.neighbourhood = new Map();
     _private.set(this, properties);
@@ -43,7 +43,7 @@ class Vertex {
    * @param {Vertex} neighbour - The vertex to be added to this instance
    */
   addNeighbour(neighbour){
-    _private.get(this).neighbourhood.set(neighbour.key, neighbour.data);
+    _private.get(this).neighbourhood.set(neighbour.key, neighbour.value);
   }
 
   /*
@@ -96,7 +96,7 @@ class Vertex {
     _private.get(this).neighbourhood.clear();
     _private.get(this).degree = null;
     _private = new WeakMap();
-    delete this.data;
+    delete this.value;
     delete this.key;
     delete this;
   }

@@ -22,13 +22,13 @@ describe('Vertex', function() {
   describe('Vertex.constructor()', function() {
     it('should create a new vertex', function() {
       let vertex = new Vertex();
-      assert.deepEqual(vertex, {key:null, data:null} );
+      assert.deepEqual(vertex, {key:null, value:null} );
       vertex = new Vertex(1);
-      assert.deepEqual(vertex, {key:KEY[0], data:null} );
+      assert.deepEqual(vertex, {key:KEY[0], value:null} );
       vertex = new Vertex(1, 'ONE');
-      assert.deepEqual(vertex, {key:KEY[0], data:DATA[0]} );
+      assert.deepEqual(vertex, {key:KEY[0], value:DATA[0]} );
       vertex = new Vertex(KEY[1], DATA[1]);
-      assert.deepEqual(vertex, {key:KEY[1], data:DATA[1]} );
+      assert.deepEqual(vertex, {key:KEY[1], value:DATA[1]} );
     });
   });
 
@@ -36,30 +36,30 @@ describe('Vertex', function() {
 
 describe('let vertex = new Vertex()', function() {
 
-  describe('vertex.data', function() {
-    it('should be able to get/set its key/data', function() {
+  describe('vertex.value', function() {
+    it('should be able to get/set its key/value', function() {
       let vertex = new Vertex();
       vertex.key = KEY[1];
-      assert.deepEqual(vertex, {key:KEY[1], data:null} );
-      vertex.data = DATA[1];
-      assert.deepEqual(vertex, {key:KEY[1], data:DATA[1]} );
+      assert.deepEqual(vertex, {key:KEY[1], value:null} );
+      vertex.value = DATA[1];
+      assert.deepEqual(vertex, {key:KEY[1], value:DATA[1]} );
       vertex.key = null;
-      vertex.data = null;
-      assert.deepEqual(vertex, {key:null, data:null} );
+      vertex.value = null;
+      assert.deepEqual(vertex, {key:null, value:null} );
 
     });
   });
 
   describe('vertex.key', function() {
-    it('should be able to get/set its key/data', function() {
+    it('should be able to get/set its key/value', function() {
       let vertex = new Vertex();
       vertex.key = KEY[1];
-      assert.deepEqual(vertex, {key:KEY[1], data:null} );
-      vertex.data = DATA[1];
-      assert.deepEqual(vertex, {key:KEY[1], data:DATA[1]} );
+      assert.deepEqual(vertex, {key:KEY[1], value:null} );
+      vertex.value = DATA[1];
+      assert.deepEqual(vertex, {key:KEY[1], value:DATA[1]} );
       vertex.key = null;
-      vertex.data = null;
-      assert.deepEqual(vertex, {key:null, data:null} );
+      vertex.value = null;
+      assert.deepEqual(vertex, {key:null, value:null} );
 
     });
   });
