@@ -42,7 +42,7 @@ class Vertex {
    * Adds a neighbour vertex to this vertex instance.
    * @param {Vertex} neighbour - The vertex to be added to this instance
    */
-  addNeighbour(neighbour){
+  add(neighbour){
     _private.get(this).neighbourhood.set(neighbour.key, neighbour.value);
   }
 
@@ -59,7 +59,7 @@ class Vertex {
    * @param {object} key - The vertex key of the target vertex in the set
    * @returns {boolean} Returns true if found, false otherwise.
    */
-  hasNeighbour(key){
+  has(key){
     return _private.get(this).neighbourhood.has(key);
   }
 
@@ -68,7 +68,7 @@ class Vertex {
    * @param {object} key - The vertex key of the target vertex in the set
    * @returns {Vertex | Null} Returns the vertex if found, null otherwise.
    */
-  getNeighbour(key){
+  get(key){
     return _private.get(this).neighbourhood.get(key)
   }
 
@@ -76,7 +76,7 @@ class Vertex {
    * Removes neighbour vertex, if it is found in the set.
    * @param {object} key - The vertex key to match from the set of neighbours
    */
-  removeNeighbour(key){
+  remove(key){
     _private.get(this).neighbourhood.remove(key);
   }
 
@@ -89,16 +89,15 @@ class Vertex {
   }
 
   /*
-   * Deletes the vertex instance, and all associated values. It also ensures
+   * Deletes the vertex neighbours, and nullifies key values. It also ensures
    * proper garbage collection by deallocating references to WeakMaps
    */
-  delete(){
+  clear(){
     _private.get(this).neighbourhood.clear();
     _private.get(this).degree = null;
     _private = new WeakMap();
-    delete this.value;
-    delete this.key;
-    delete this;
+    this.value = null;
+    this.key = null;
   }
 
 }

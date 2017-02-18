@@ -71,39 +71,39 @@ describe('let vertex = new Vertex()', function() {
       let n2 = new Vertex(KEY[2], DATA[2]);
       let n3 = new Vertex(KEY[3], DATA[3]);
       assert.deepEqual(vertex.degree, 0);
-      vertex.addNeighbour(n1);
+      vertex.add(n1);
       assert.deepEqual(vertex.degree, 1);
-      vertex.addNeighbour(n2);
+      vertex.add(n2);
       assert.deepEqual(vertex.degree, 2);
-      vertex.addNeighbour(n3);
+      vertex.add(n3);
       assert.deepEqual(vertex.degree, 3);
     });
   });
 
-  describe('vertex.addNeighbour(node)', function() {
+  describe('vertex.add(node)', function() {
     it('should add a neighbour to itself', function() {
       let vertex = new Vertex(KEY[0], DATA[0]);
       let child = new Vertex(KEY[1], DATA[1]);
-      vertex.addNeighbour(child);
-      assert.equal(vertex.getNeighbour(KEY[1]), DATA[1]);
+      vertex.add(child);
+      assert.equal(vertex.get(KEY[1]), DATA[1]);
     });
   });
 
-  describe('vertex.hasNeighbour(node)', function() {
+  describe('vertex.has(node)', function() {
     it('should return if vertex has matching neighbour', function() {
       let vertex = new Vertex(KEY[0], DATA[0]);
       let child = new Vertex(KEY[1], DATA[1]);
-      vertex.addNeighbour(child);
-      assert.equal(vertex.hasNeighbour(KEY[1]), true);
+      vertex.add(child);
+      assert.equal(vertex.has(KEY[1]), true);
     });
   });
 
-  describe('vertex.getNeighbour(node)', function() {
+  describe('vertex.get(node)', function() {
     it('should return vertex matching neighbour', function() {
       let vertex = new Vertex(KEY[0], DATA[0]);
       let child = new Vertex(KEY[1], DATA[1]);
-      vertex.addNeighbour(child);
-      assert.deepEqual(vertex.getNeighbour(KEY[1]), DATA[1]);
+      vertex.add(child);
+      assert.deepEqual(vertex.get(KEY[1]), DATA[1]);
     });
   });
 
@@ -113,9 +113,9 @@ describe('let vertex = new Vertex()', function() {
       let n1 = new Vertex(KEY[1], DATA[1]);
       let n2 = new Vertex(KEY[2], DATA[2]);
       let n3 = new Vertex(KEY[3], DATA[3]);
-      vertex.addNeighbour(n1);
-      vertex.addNeighbour(n2);
-      vertex.addNeighbour(n3);
+      vertex.add(n1);
+      vertex.add(n2);
+      vertex.add(n3);
       let s = new Set();
       s.add(n1);
       s.add(n2);
@@ -130,11 +130,11 @@ describe('let vertex = new Vertex()', function() {
       let n1 = new Vertex(KEY[1], DATA[1]);
       let n2 = new Vertex(KEY[2], DATA[2]);
       let n3 = new Vertex(KEY[3], DATA[3]);
-      vertex.addNeighbour(n1);
-      vertex.addNeighbour(n2);
-      vertex.addNeighbour(n3);
-      vertex.delete();
-      assert.deepEqual(vertex, {});
+      vertex.add(n1);
+      vertex.add(n2);
+      vertex.add(n3);
+      vertex.clear();
+      assert.deepEqual(vertex, new Vertex());
     });
   });
 });
