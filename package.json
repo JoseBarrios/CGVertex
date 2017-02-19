@@ -1,6 +1,6 @@
 {
-  "name": "jb-vertex",
-  "version": "1.0.0",
+  "name": "vertex-ds",
+  "version": "0.4.0",
   "description": "Vertex data structure class for Javascript",
   "main": "index.js",
   "scripts": {
