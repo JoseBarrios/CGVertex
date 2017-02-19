@@ -1,140 +1,80 @@
 'use strict'
 
-const CGVertex = require('../index.js');
+const Vertex = require('../index.js');
 const assert = require('assert');
-
 const KEY = [1,2,3,4,5];
 const DATA = ['ONE', 'TWO', 'THREE', 'FOUR', 'FIVE'];
+const EMPTY = new Vertex();
 
-const EMPTY = new CGVertex();
-describe('CGVertex', function() {
+const STRING = '{"key":"1","value":{"2":"3"}}';
+const SIMPLE = new Vertex(1, {"2":"3"});
 
-  describe('CGVertex.equal(n1, n2)', function() {
-    it('should return true of vertex are equal, false otherwise', function() {
-      let vertex = new CGVertex(KEY[0], DATA[0]);
-      let target = new CGVertex(KEY[0], DATA[0]);
-      assert.equal(CGVertex.equal(vertex, target), true);
-      target = new CGVertex(KEY[1], DATA[1]);
-      assert.equal(CGVertex.equal(vertex, target), false);
+
+describe('Vertex: Static Methods', function() {
+
+  describe('Vertex.equal(n1, n2)', function() {
+    it('Vertex.equal(new Vertex(), new Vertex()) should be true', function() {
+      assert.equal(Vertex.equal(new Vertex(), new Vertex()), true);
     });
-  });
+    it('Vertex.equal(new Vertex(1,2), new Vertex(1,2)) should be true', function() {
+      assert.equal(Vertex.equal(new Vertex(1,2), new Vertex(1,2)), true);
+    });
+    it('Vertex.equal(new Vertex(1,{1:2}), new Vertex(1,{1:2})) should be true', function() {
+      assert.equal(Vertex.equal(new Vertex(1,{1:2}), new Vertex(1,{1:2})), true);
+    });
+    it('Vertex.equal(new Vertex({1:2},3), new Vertex({1:2},3)) should be true', function() {
+      assert.equal(Vertex.equal(new Vertex({1:2},3), new Vertex({1:2},3)), true);
+    });
+    it('Vertex.equal(new Vertex(1,2), new Vertex(2,1)) should be false', function() {
+      assert.equal(Vertex.equal(new Vertex(1,2), new Vertex(2,1)), false);
+    });
 
-  describe('CGVertex.constructor()', function() {
-    it('should create a new vertex', function() {
-      let vertex = new CGVertex();
-      assert.deepEqual(vertex, {key:null, value:null} );
-      vertex = new CGVertex(1);
-      assert.deepEqual(vertex, {key:KEY[0], value:null} );
-      vertex = new CGVertex(1, 'ONE');
-      assert.deepEqual(vertex, {key:KEY[0], value:DATA[0]} );
-      vertex = new CGVertex(KEY[1], DATA[1]);
-      assert.deepEqual(vertex, {key:KEY[1], value:DATA[1]} );
+  });
+  describe('Vertex.fromString()', function() {
+    it(`Vertex.fromString(${SIMPLE}) should be ${SIMPLE}`, function() {
+      assert.deepEqual(Vertex.fromString(SIMPLE), SIMPLE);
     });
   });
 
 });
 
-describe('let vertex = new CGVertex()', function() {
+describe('Vertex: Instance Methods', function() {
 
-  describe('vertex.value', function() {
+  describe('#constructor()', function() {
+    it('new Vertex() should equal {key: null, value: null}', function() {
+      assert.deepEqual(new Vertex(), {key:null, value:null} );
+    });
+    it('new Vertex(1, 2) should equal {key: 1, value: 2}', function() {
+      assert.deepEqual(new Vertex(1,2), {key:1, value:2} );
+    });
+  });
+
+  describe('#toString()', function() {
+    it('should convert vertex to string format', function() {
+      let vertex = new Vertex("1",{2:"3"});
+      assert.deepEqual(vertex.toString(), STRING);
+    });
+  });
+
+  describe('vertex.key/value', function() {
     it('should be able to get/set its key/value', function() {
-      let vertex = new CGVertex();
+      let vertex = new Vertex();
       vertex.key = KEY[1];
-      assert.deepEqual(vertex, {key:KEY[1], value:null} );
+      assert.deepEqual(vertex, {key:KEY[1], value:null } );
       vertex.value = DATA[1];
-      assert.deepEqual(vertex, {key:KEY[1], value:DATA[1]} );
+      assert.deepEqual(vertex, {key:KEY[1], value:DATA[1] } );
       vertex.key = null;
       vertex.value = null;
-      assert.deepEqual(vertex, {key:null, value:null} );
+      assert.deepEqual(vertex, {key:null, value:null } );
 
-    });
-  });
-
-  describe('vertex.key', function() {
-    it('should be able to get/set its key/value', function() {
-      let vertex = new CGVertex();
-      vertex.key = KEY[1];
-      assert.deepEqual(vertex, {key:KEY[1], value:null} );
-      vertex.value = DATA[1];
-      assert.deepEqual(vertex, {key:KEY[1], value:DATA[1]} );
-      vertex.key = null;
-      vertex.value = null;
-      assert.deepEqual(vertex, {key:null, value:null} );
-
-    });
-  });
-
-  describe('vertex.degree', function() {
-    it('should return the number of neighbours of the vertex', function() {
-      let vertex = new CGVertex(KEY[0], DATA[0]);
-      let n1 = new CGVertex(KEY[1], DATA[1]);
-      let n2 = new CGVertex(KEY[2], DATA[2]);
-      let n3 = new CGVertex(KEY[3], DATA[3]);
-      assert.deepEqual(vertex.degree, 0);
-      vertex.add(n1);
-      assert.deepEqual(vertex.degree, 1);
-      vertex.add(n2);
-      assert.deepEqual(vertex.degree, 2);
-      vertex.add(n3);
-      assert.deepEqual(vertex.degree, 3);
-    });
-  });
-
-  describe('vertex.add(node)', function() {
-    it('should add a neighbour to itself', function() {
-      let vertex = new CGVertex(KEY[0], DATA[0]);
-      let child = new CGVertex(KEY[1], DATA[1]);
-      vertex.add(child);
-      assert.equal(vertex.get(KEY[1]), DATA[1]);
-    });
-  });
-
-  describe('vertex.has(node)', function() {
-    it('should return if vertex has matching neighbour', function() {
-      let vertex = new CGVertex(KEY[0], DATA[0]);
-      let child = new CGVertex(KEY[1], DATA[1]);
-      vertex.add(child);
-      assert.equal(vertex.has(KEY[1]), true);
-    });
-  });
-
-  describe('vertex.get(node)', function() {
-    it('should return vertex matching neighbour', function() {
-      let vertex = new CGVertex(KEY[0], DATA[0]);
-      let child = new CGVertex(KEY[1], DATA[1]);
-      vertex.add(child);
-      assert.deepEqual(vertex.get(KEY[1]), DATA[1]);
-    });
-  });
-
-  describe('vertex.getNeighbours()', function() {
-    it('should return a Set with all the vertex neighbours', function() {
-      let vertex = new CGVertex(KEY[0], DATA[0]);
-      let n1 = new CGVertex(KEY[1], DATA[1]);
-      let n2 = new CGVertex(KEY[2], DATA[2]);
-      let n3 = new CGVertex(KEY[3], DATA[3]);
-      vertex.add(n1);
-      vertex.add(n2);
-      vertex.add(n3);
-      let s = new Set();
-      s.add(n1);
-      s.add(n2);
-      s.add(n3);
-      assert.deepEqual(vertex.getNeighbours(), s);
     });
   });
 
   describe('vertex.delete()', function() {
     it('should delete vertex and all properties', function() {
-      let vertex = new CGVertex(KEY[0], DATA[0]);
-      let n1 = new CGVertex(KEY[1], DATA[1]);
-      let n2 = new CGVertex(KEY[2], DATA[2]);
-      let n3 = new CGVertex(KEY[3], DATA[3]);
-      vertex.add(n1);
-      vertex.add(n2);
-      vertex.add(n3);
+      let vertex = new Vertex(1, "one");
       vertex.clear();
-      assert.deepEqual(vertex, new CGVertex());
+      assert.deepEqual(vertex, new Vertex());
     });
   });
 });
