@@ -4,14 +4,14 @@
 let _private = new WeakMap();
 
 /*
- * A class for a Vertex value structure containing a key, value and neighbours
+ * A class for a CGVertex value structure containing a key, value and neighbours
  *
  * @author Jose Barrios
- * @version 0.1.0
+ * @version 0.5.0
  *
  * @class
  */
-class Vertex {
+class CGVertex {
 
   /*
    * A static method that compares two vertexes for equality.
@@ -23,12 +23,12 @@ class Vertex {
     return n1 === n2;
   }
 
-  /* Creates an instance of Vertex.
+  /* Creates an instance of CGVertex.
    *
    * @constructor
-   * @this {Vertex}
-   * @param {string|number} key - The key of the Vertex, used as a reference
-   * @param {object} value - The value of the Vertex, can be any object
+   * @this {CGVertex}
+   * @param {string|number} key - The key of the CGVertex, used as a reference
+   * @param {object} value - The value of the CGVertex, can be any object
    */
   constructor(key, value){
     this.key = key || null;
@@ -39,19 +39,20 @@ class Vertex {
   }
 
   /*
-   * Adds a neighbour vertex to this vertex instance.
-   * @param {Vertex} neighbour - The vertex to be added to this instance
-   */
-  add(neighbour){
-    _private.get(this).neighbourhood.set(neighbour.key, neighbour.value);
-  }
-
-  /*
    * Returns the number of vertex neighbours referenced by this vertex instance.
    * @returns {number} The number of neighbours connected to this vertex.
    */
   get degree(){
     return _private.get(this).neighbourhood.size;
+  }
+
+
+  /*
+   * Adds a neighbour vertex to this vertex instance.
+   * @param {CGVertex} neighbour - The vertex to be added to this instance
+   */
+  add(neighbour){
+    _private.get(this).neighbourhood.set(neighbour.key, neighbour.value);
   }
 
   /*
@@ -66,7 +67,7 @@ class Vertex {
   /*
    * Returns the neighbour vertex if it is found in the set.
    * @param {object} key - The vertex key of the target vertex in the set
-   * @returns {Vertex | Null} Returns the vertex if found, null otherwise.
+   * @returns {CGVertex | Null} Returns the vertex if found, null otherwise.
    */
   get(key){
     return _private.get(this).neighbourhood.get(key)
@@ -102,4 +103,4 @@ class Vertex {
 
 }
 
-module.exports = Vertex;
+module.exports = CGVertex;
