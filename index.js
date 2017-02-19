@@ -43,7 +43,7 @@ class Vertex {
     return JSON.parse(str);
   }
   serialize(){
-    return `${this.key}:${JSON.stringify(this.value)}`;
+    return `${this.key}=${JSON.stringify(this.value)}`;
   }
 
 
