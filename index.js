@@ -42,8 +42,8 @@ class Vertex {
   static fromString(str){
     return JSON.parse(str);
   }
-  get serial(){
-    return `VTX=${this.key}:${JSON.stringify(this.value)}`;
+  serialize(){
+    return `${this.key}:${JSON.stringify(this.value)}`;
   }
 
 
