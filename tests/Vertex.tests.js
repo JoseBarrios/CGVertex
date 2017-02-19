@@ -30,6 +30,14 @@ describe('Vertex: Static Methods', function() {
     });
 
   });
+
+  describe('Vertex.deserialize()', function() {
+    it('Vertex.deserialize() should be {1: "2":3}', function() {
+      let test = new Vertex(1,{"2":3});
+      assert.deepEqual(test, Vertex.deserialize(test.serialize()), true);
+    });
+  });
+
   describe('Vertex.fromString()', function() {
     it(`Vertex.fromString(${SIMPLE}) should be ${SIMPLE}`, function() {
       assert.deepEqual(Vertex.fromString(SIMPLE), SIMPLE);

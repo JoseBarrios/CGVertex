@@ -45,6 +45,11 @@ class Vertex {
   serialize(){
     return `${this.key}=${JSON.stringify(this.value)}`;
   }
+  static deserialize(str){
+    let [key, value] = str.split("=");
+    let deserialized =  new Vertex(key, JSON.parse(value))
+    return deserialized;
+  }
 
 
   /*
