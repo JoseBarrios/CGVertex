@@ -75,8 +75,10 @@ class Vertex {
    * proper garbage collection by deallocating references to WeakMaps
    */
   clear(){
+    _edges = new WeakSet();
     this.data = null;
     this.key = null;
+    this.degree = 0;
   }
 
 }
