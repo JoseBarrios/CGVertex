@@ -2,11 +2,12 @@
 
 const Vertex = require('../index.js');
 const assert = require('assert');
+
 const KEY = [1,2,3,4,5];
 const DATA = ['ONE', 'TWO', 'THREE', 'FOUR', 'FIVE'];
 const EMPTY = new Vertex();
 
-const STRING = '{"key":"1","value":{"2":"3"}}';
+const STRING = '{"key":"1","data":{"2":"3"},"degree":0}';
 const SIMPLE = new Vertex(1, {"2":"3"});
 
 
@@ -48,14 +49,66 @@ describe('Vertex: Static Methods', function() {
 
 describe('Vertex: Instance Methods', function() {
 
-  describe('#constructor()', function() {
-    it('new Vertex() should equal {key: null, value: null}', function() {
-      assert.deepEqual(new Vertex(), {key:null, value:null} );
+  describe('vertex.addEdgeTo()', function() {
+    it('should add edge(s) to other vertex', function() {
+      let vertex1 = new Vertex(1, "one");
+      let vertex2 = new Vertex(2, "two");
+      let vertex3 = new Vertex(3, "thre");
+      vertex1.addEdgeTo(vertex2);
+      assert.equal(vertex1.degree, 1);
+      assert.equal(vertex1.hasEdgeTo(vertex3), false);
     });
-    it('new Vertex(1, 2) should equal {key: 1, value: 2}', function() {
-      assert.deepEqual(new Vertex(1,2), {key:1, value:2} );
+
+    it('should check if current vertex edges target vertex', function() {
+      let vertex1 = new Vertex(1, "one");
+      let vertex2 = new Vertex(2, "two");
+      let vertex3 = new Vertex(3, "thre");
+      vertex1.addEdgeTo(vertex2);
+      assert.equal(vertex1.hasEdgeTo(vertex2), true);
+      assert.equal(vertex1.hasEdgeTo(vertex3), false);
     });
+
+    it('should delete vertex edge to target', function() {
+      let vertex1 = new Vertex(1, "one");
+      let vertex2 = new Vertex(2, "two");
+      let vertex3 = new Vertex(3, "thre");
+      vertex1.addEdgeTo(vertex2);
+      assert.equal(vertex1.hasEdgeTo(vertex2), true);
+      vertex1.deleteEdgeTo(vertex2);
+      assert.equal(vertex1.hasEdgeTo(vertex2), false);
+    });
+
   });
+
+  describe('#degree', function() {
+    it('should update degree when edges are added', function() {
+      let vertex1 = new Vertex(1, "one");
+      let vertex2 = new Vertex(2, "two");
+      let vertex3 = new Vertex(3, "thre");
+      assert.equal(vertex1.degree, 0);
+      vertex1.addEdgeTo(vertex2);
+      vertex1.addEdgeTo(vertex2);
+      assert.equal(vertex1.degree, 1);
+      vertex1.addEdgeTo(vertex3);
+      assert.equal(vertex1.degree, 2);
+    });
+    it('should update degree when edges are removed', function() {
+      let vertex1 = new Vertex(1, "one");
+      let vertex2 = new Vertex(2, "two");
+      let vertex3 = new Vertex(3, "thre");
+      vertex1.addEdgeTo(vertex2);
+      vertex1.addEdgeTo(vertex3);
+      assert.equal(vertex1.degree, 2);
+      vertex1.deleteEdgeTo(vertex3);
+      assert.equal(vertex1.degree, 1);
+      vertex1.deleteEdgeTo(vertex2);
+      assert.equal(vertex1.degree, 0);
+      vertex1.deleteEdgeTo(vertex2);
+      assert.equal(vertex1.degree, 0);
+    });
+
+  });
+
 
   describe('#toString()', function() {
     it('should convert vertex to string format', function() {
@@ -64,16 +117,16 @@ describe('Vertex: Instance Methods', function() {
     });
   });
 
-  describe('vertex.key/value', function() {
-    it('should be able to get/set its key/value', function() {
+  describe('vertex.key/data', function() {
+    it('should be able to get/set its key/data', function() {
       let vertex = new Vertex();
       vertex.key = KEY[1];
-      assert.deepEqual(vertex, {key:KEY[1], value:null } );
-      vertex.value = DATA[1];
-      assert.deepEqual(vertex, {key:KEY[1], value:DATA[1] } );
+      assert.deepEqual(vertex, {key:KEY[1], data:null, degree:0 } );
+      vertex.data = DATA[1];
+      assert.deepEqual(vertex, {key:KEY[1], data:DATA[1], degree:0 } );
       vertex.key = null;
-      vertex.value = null;
-      assert.deepEqual(vertex, {key:null, value:null } );
+      vertex.data = null;
+      assert.deepEqual(vertex, {key:null, data:null, degree:0 } );
 
     });
   });
