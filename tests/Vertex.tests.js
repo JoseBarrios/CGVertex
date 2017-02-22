@@ -33,8 +33,8 @@ describe('Vertex: Static Methods', function() {
   });
 
   describe('Vertex.deserialize()', function() {
-    it('Vertex.deserialize() should be {1: "2":3}', function() {
-      let test = new Vertex(1,{"2":3});
+    it('Vertex.deserialize() should be {"1": "2":3}', function() {
+      let test = new Vertex("1",{"2":3});
       assert.deepEqual(test, Vertex.deserialize(test.serialize()), true);
     });
   });
@@ -45,37 +45,45 @@ describe('Vertex: Static Methods', function() {
     });
   });
 
+  describe('Vertex.getMap()', function() {
+    it(`Should return the shared memory map where vertices are stored`, function() {
+      console.log(Vertex.getMap())
+      //assert.deepEqual(Vertex.fromString(SIMPLE), SIMPLE);
+    });
+  });
+
+
 });
 
 describe('Vertex: Instance Methods', function() {
 
-  describe('vertex.addEdgeTo()', function() {
+  describe('vertex.add()', function() {
     it('should add edge(s) to other vertex', function() {
       let vertex1 = new Vertex(1, "one");
       let vertex2 = new Vertex(2, "two");
       let vertex3 = new Vertex(3, "thre");
-      vertex1.addEdgeTo(vertex2);
+      vertex1.add(vertex2);
       assert.equal(vertex1.degree, 1);
-      assert.equal(vertex1.hasEdgeTo(vertex3), false);
+      assert.equal(vertex1.has(vertex3), false);
     });
 
     it('should check if current vertex edges target vertex', function() {
       let vertex1 = new Vertex(1, "one");
       let vertex2 = new Vertex(2, "two");
       let vertex3 = new Vertex(3, "thre");
-      vertex1.addEdgeTo(vertex2);
-      assert.equal(vertex1.hasEdgeTo(vertex2), true);
-      assert.equal(vertex1.hasEdgeTo(vertex3), false);
+      vertex1.add(vertex2);
+      assert.equal(vertex1.has(vertex2), true);
+      assert.equal(vertex1.has(vertex3), false);
     });
 
     it('should delete vertex edge to target', function() {
       let vertex1 = new Vertex(1, "one");
       let vertex2 = new Vertex(2, "two");
       let vertex3 = new Vertex(3, "thre");
-      vertex1.addEdgeTo(vertex2);
-      assert.equal(vertex1.hasEdgeTo(vertex2), true);
-      vertex1.deleteEdgeTo(vertex2);
-      assert.equal(vertex1.hasEdgeTo(vertex2), false);
+      vertex1.add(vertex2);
+      assert.equal(vertex1.has(vertex2), true);
+      vertex1.delete(vertex2);
+      assert.equal(vertex1.has(vertex2), false);
     });
 
   });
@@ -86,24 +94,24 @@ describe('Vertex: Instance Methods', function() {
       let vertex2 = new Vertex(2, "two");
       let vertex3 = new Vertex(3, "thre");
       assert.equal(vertex1.degree, 0);
-      vertex1.addEdgeTo(vertex2);
-      vertex1.addEdgeTo(vertex2);
+      vertex1.add(vertex2);
+      vertex1.add(vertex2);
       assert.equal(vertex1.degree, 1);
-      vertex1.addEdgeTo(vertex3);
+      vertex1.add(vertex3);
       assert.equal(vertex1.degree, 2);
     });
     it('should update degree when edges are removed', function() {
       let vertex1 = new Vertex(1, "one");
       let vertex2 = new Vertex(2, "two");
       let vertex3 = new Vertex(3, "thre");
-      vertex1.addEdgeTo(vertex2);
-      vertex1.addEdgeTo(vertex3);
+      vertex1.add(vertex2);
+      vertex1.add(vertex3);
       assert.equal(vertex1.degree, 2);
-      vertex1.deleteEdgeTo(vertex3);
+      vertex1.delete(vertex3);
       assert.equal(vertex1.degree, 1);
-      vertex1.deleteEdgeTo(vertex2);
+      vertex1.delete(vertex2);
       assert.equal(vertex1.degree, 0);
-      vertex1.deleteEdgeTo(vertex2);
+      vertex1.delete(vertex2);
       assert.equal(vertex1.degree, 0);
     });
 

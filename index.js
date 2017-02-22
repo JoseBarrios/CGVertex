@@ -1,6 +1,6 @@
 'use strict'
 
-let _edges = new WeakSet();
+let _vertices = new Map();
 
 /*
  * A class for a Vertex data structure containing a key, data and edges
@@ -33,25 +33,30 @@ class Vertex {
     this.key = key;
     this.data = data;
     this.degree = 0;
+
+    this.address = Symbol(`V${this.key}`);
+    _vertices.set(this.address, this);
   }
 
-  addEdgeTo(target){
-    if(!_edges.has(target)){
-      _edges.add(target);
-      this.degree += _edges.has(target)? 1 : 0;
+  add(target){
+    if(!_vertices.has(target)){
+      _vertices.set(target);
+      this.degree += _vertices.has(target)? 1 : 0;
     }
   }
 
-  hasEdgeTo(target){
-    return _edges.has(target)
+  has(target){
+    return _vertices.has(target)
   }
 
-  deleteEdgeTo(target){
-    if(_edges.has(target)){
-      _edges.delete(target);
-      this.degree -= _edges.has(target)? 0 : 1;
+  delete(target){
+    if(_vertices.has(target)){
+      _vertices.delete(target);
+      this.degree -= _vertices.has(target)? 0 : 1;
     }
   }
+
+  static getMap(){ return _vertices; }
 
   /*
    * Returns a string representing the vertex.
@@ -75,7 +80,7 @@ class Vertex {
    * proper garbage collection by deallocating references to WeakMaps
    */
   clear(){
-    _edges = new WeakSet();
+    _vertices = new WeakSet();
     this.data = null;
     this.key = null;
     this.degree = 0;
