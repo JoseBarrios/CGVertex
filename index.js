@@ -34,14 +34,15 @@ class Vertex {
     this.data = data;
     this.degree = 0;
 
-    this.address = Symbol(`V${this.key}`);
+    let unique = Symbol(this.key)
+    this.address = { unique };
     _vertices.set(this.address, this);
   }
 
   add(target){
     if(!_vertices.has(target)){
       _vertices.set(target);
-      this.degree += _vertices.has(target)? 1 : 0;
+      this.degree += 1;
     }
   }
 
@@ -52,7 +53,7 @@ class Vertex {
   delete(target){
     if(_vertices.has(target)){
       _vertices.delete(target);
-      this.degree -= _vertices.has(target)? 0 : 1;
+      this.degree -= 1;
     }
   }
 
@@ -80,10 +81,10 @@ class Vertex {
    * proper garbage collection by deallocating references to WeakMaps
    */
   clear(){
-    _vertices = new WeakSet();
+    _vertices.delete(this.address);
     this.data = null;
     this.key = null;
-    this.degree = 0;
+    this.degree = null;
   }
 
 }
