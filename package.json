@@ -1,21 +1,21 @@
 {
-  "name": "vertex-ds",
-  "version": "0.8.3",
-  "description": "Vertex data structure class for Javascript",
+  "name": "dc-vertex",
+  "version": "0.0.1",
+  "description": "Vertex data controller for Javascript",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha test/"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JoseBarrios/Vertex.git"
+    "url": "git+https://github.com/JoseBarrios/dc-vertex.git"
   },
   "author": "JoseBarrios",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/JoseBarrios/Vertex/issues"
+    "url": "https://github.com/JoseBarrios/dc-vertex/issues"
   },
-  "homepage": "https://github.com/JoseBarrios/Vertex#readme",
+  "homepage": "https://github.com/JoseBarrios/dc-vertex#readme",
   "devDependencies": {
     "eslint": "^5.9.0",
     "mocha": "^3.2.0"
