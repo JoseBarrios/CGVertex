@@ -4,7 +4,7 @@
   "description": "Vertex data structure class for Javascript",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha tests/"
+    "test": "./node_modules/mocha/bin/mocha test/"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,11 @@
   },
   "homepage": "https://github.com/JoseBarrios/Vertex#readme",
   "devDependencies": {
+    "eslint": "^5.9.0",
     "mocha": "^3.2.0"
+  },
+  "dependencies": {
+    "dc-singly-linked-list": "0.0.12",
+    "dc-thing": "^0.3.13"
   }
 }

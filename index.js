@@ -1,25 +1,24 @@
-'use strict'
+"use strict";
 
-let _vertices = new Map();
+const ThingDataController = require("dc-thing");
+const SinglyLinkedList = require("dc-singly-linked-list");
 
 /*
- * A class for a Vertex data structure containing a key, data and edges
+ * A class for a Vertex data structure containing data and edges
  *
  * @author Jose Barrios
  * @version 0.5.0
  *
  * @class
  */
-class Vertex {
+class VertexDataController extends ThingDataController {
 
   /*
    * A static method that compares two vertexes for equality.
    * @returns {boolean} true if they are equal, false otherwise
    */
   static equal(n1, n2){
-    n1 = JSON.stringify(n1);
-    n2 = JSON.stringify(n2);
-    return n1 === n2;
+    return ThingDataController.lodash.isEqual(n1.data, n2.data)
   }
 
   /* Creates an instance of Vertex.
@@ -29,64 +28,46 @@ class Vertex {
    * @param {string|number} key - The key of the Vertex, used as a reference
    * @param {object} data - The data of the Vertex, can be any object
    */
-  constructor(key = null, data = null){
-    this.key = key;
-    this.data = data;
+  constructor(data){
+    super();
     this.degree = 0;
-
-    let unique = Symbol(this.key)
-    this.address = { unique };
-    _vertices.set(this.address, this);
+    this.data = data;
+    this.type = "vertex";
+    this.neighbour = new SinglyLinkedList();
   }
 
-  add(target){
-    if(!_vertices.has(target)){
-      _vertices.set(target);
+  get adjacencyList(){
+    return [this.data, ... this.neighbour.adjacencyList];
+  }
+
+  addNeighbour(data){
+    if(!this.neighbour.has(data)){
+      this.neighbour.insert(data);
       this.degree += 1;
     }
   }
 
   has(target){
-    return _vertices.has(target)
+    return this.neighbour.has(target);
   }
 
   delete(target){
-    if(_vertices.has(target)){
-      _vertices.delete(target);
+    if(this.neighbour.has(target)){
+      this.neighbour.delete(target);
       this.degree -= 1;
     }
   }
-
-  static getMap(){ return _vertices; }
-
-  /*
-   * Returns a string representing the vertex.
-   * @returns {string} The string representing the vertex.
-   */
-  toString(){ return JSON.stringify(this); }
-
-  static fromString(str){ return JSON.parse(str); }
-
-  serialize(){ return `${this.key}=${JSON.stringify(this.data)}`; }
-
-  static deserialize(str){
-    let [key, data] = str.split("=");
-    let deserialized =  new Vertex(key, JSON.parse(data))
-    return deserialized;
-  }
-
 
   /*
    * Deletes the vertex neighbours, and nullifies key data. It also ensures
    * proper garbage collection by deallocating references to WeakMaps
    */
   clear(){
-    _vertices.delete(this.address);
+    this.neighbour = new SinglyLinkedList();
     this.data = null;
     this.key = null;
     this.degree = null;
   }
-
 }
 
-module.exports = Vertex;
+module.exports = VertexDataController;
