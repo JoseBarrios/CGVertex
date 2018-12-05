@@ -52,19 +52,18 @@ describe("Vertex: Instance Methods", function() {
       let vertex2 = new Vertex(2);
       let vertex3 = new Vertex(3);
       vertex1.addNeighbour(vertex2);
-      assert.equal(vertex1.has(vertex2), true);
-      assert.equal(vertex1.has(vertex3), false);
+      assert.equal(vertex1.hasNeighbour(vertex2), true);
+      assert.equal(vertex1.hasNeighbour(vertex3), false);
     });
     it("should delete vertex edge to target", function() {
       let vertex1 = new Vertex(1);
       // let vertex2 = new Vertex("two");
       let vertex2 = {complex:"data"};
       vertex1.addNeighbour(vertex2);
-      assert.equal(vertex1.has(vertex2), true);
+      assert.equal(vertex1.hasNeighbour(vertex2), true);
       assert.equal(vertex1.degree, 1);
-      vertex1.delete(vertex2);
-      console.log(vertex1.adjacencyList);
-      assert.equal(vertex1.has(vertex2), false);
+      vertex1.deleteNeighbour(vertex2);
+      assert.equal(vertex1.hasNeighbour(vertex2), false);
     });
   });
 
@@ -87,11 +86,11 @@ describe("Vertex: Instance Methods", function() {
       vertex1.addNeighbour(vertex2);
       vertex1.addNeighbour(vertex3);
       assert.equal(vertex1.degree, 2);
-      vertex1.delete(vertex3);
+      vertex1.deleteNeighbour(vertex3);
       assert.equal(vertex1.degree, 1);
-      vertex1.delete(vertex2);
+      vertex1.deleteNeighbour(vertex2);
       assert.equal(vertex1.degree, 0);
-      vertex1.delete(vertex2);
+      vertex1.deleteNeighbour(vertex2);
       assert.equal(vertex1.degree, 0);
     });
 
@@ -108,13 +107,13 @@ describe("Vertex: Instance Methods", function() {
     });
   });
 
-  describe("vertex.delete()", function() {
+  describe("vertex.deleteNeighbour()", function() {
     it("should delete vertex and all properties", function() {
       let vertex = new Vertex();
       let vertex2 = new Vertex();
       vertex.addNeighbour(vertex2);
       assert.equal(vertex.degree, 1);
-      vertex.delete(vertex2);
+      vertex.deleteNeighbour(vertex2);
       assert.deepEqual(vertex.degree, 0);
     });
   });

@@ -47,11 +47,11 @@ class VertexDataController extends ThingDataController {
     }
   }
 
-  has(target){
+  hasNeighbour(target){
     return this.neighbour.has(target);
   }
 
-  delete(target){
+  deleteNeighbour(target){
     if(this.neighbour.has(target)){
       this.neighbour.delete(target);
       this.degree -= 1;
