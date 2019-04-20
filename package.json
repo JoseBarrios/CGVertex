@@ -18,7 +18,7 @@
   "homepage": "https://github.com/JoseBarrios/dc-vertex#readme",
   "devDependencies": {
     "eslint": "^5.9.0",
-    "mocha": "^3.2.0"
+    "mocha": "^6.1.4"
   },
   "dependencies": {
     "dc-singly-linked-list": "0.0.12",
